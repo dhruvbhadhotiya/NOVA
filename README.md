@@ -85,7 +85,7 @@ ai_classroom_assistant/
 ## Credits
 - [Phi-2](https://huggingface.co/microsoft/phi-2) by Microsoft
 - [BLIP](https://huggingface.co/Salesforce/blip-image-captioning-base) by Salesforce
-- [OpenVINO](https://docs.openvino.ai/)
+- [OpenVINO](https://docs.openvino.ai/) by Intel
 - [Hugging Face Transformers](https://huggingface.co/docs/transformers/index)
 
 ---
