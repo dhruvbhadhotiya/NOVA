@@ -205,3 +205,17 @@ document.getElementById('image-caption-form').addEventListener('submit', functio
 });
 
 });
+
+// MultipleFiles/app.js
+
+document.getElementById('start-live-analysis').addEventListener('click', async function() {
+    try {
+        const response = await fetch('/api/live-attention', {
+            method: 'GET'
+        });
+        const data = await response.json();
+        alert(data.message);
+    } catch (err) {
+        alert('Error starting live analysis: ' + err);
+    }
+});
