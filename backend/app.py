@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, jsonify, send_from_directory
 from nlp_module import answer_question
 from image_captioning import generate_caption
+from speech_module import transcribe_audio
 
 frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend'))
 static_dir = os.path.join(frontend_dir, 'static')
@@ -39,6 +40,27 @@ def image_qna():
     caption = generate_caption(image_file)
     answer = answer_question(question, context=caption)
     return jsonify({'caption': caption, 'answer': answer})
+
+@app.route('/api/speech-to-text', methods=['POST'])
+def speech_to_text():
+    if 'audio' not in request.files:
+        return jsonify({'error': 'No audio file provided'}), 400
+    
+    audio_file = request.files['audio']
+    if audio_file.filename == '':
+        return jsonify({'error': 'No audio file selected'}), 400
+    
+    # Log information about the received file
+    app.logger.info(f"Received audio file: {audio_file.filename}, Content-Type: {audio_file.content_type}")
+    
+    try:
+        text = transcribe_audio(audio_file)
+        if text.startswith("Error"):
+            return jsonify({'error': text}), 400
+        return jsonify({'text': text})
+    except Exception as e:
+        app.logger.error(f"Exception in speech_to_text: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/')
 def serve_index():

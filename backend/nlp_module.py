@@ -3,16 +3,16 @@ from optimum.intel import OVModelForCausalLM
 from transformers import AutoTokenizer
 import torch
 
-# 📌 Set base model path
+# Set base model path
 BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_DIR = BASE_DIR / "models" / "phi-2-int8-ov"
 MODEL_DIR = str(MODEL_DIR.as_posix())  # POSIX-safe path for cross-platform
 
-# 🧠 Load tokenizer and model
+# Load tokenizer and model
 tokenizer = AutoTokenizer.from_pretrained(MODEL_DIR, trust_remote_code=True)
 model = OVModelForCausalLM.from_pretrained(MODEL_DIR, device_map="AUTO", trust_remote_code=True)
 
-# ✅ Ensure pad token is defined
+# Ensure pad token is defined
 if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
 

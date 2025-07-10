@@ -38,7 +38,7 @@ def generate_caption(image_file) -> str:
 
 # Test the module directly
 if __name__ == "__main__":
-    test_image_path = "sample_cat.jpg"  # 🔁 Replace with a valid image path
+    test_image_path = "sample_cat.jpg"  
 
     try:
         with open(test_image_path, "rb") as f:

@@ -6,3 +6,7 @@ pillow
 scipy
 sounddevice
 psutil
+soundfile
+librosa>=0.10.0
+ffmpeg-python
+audioread
