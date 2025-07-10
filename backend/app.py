@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from nlp_module import answer_question
 from image_captioning import generate_caption
 from speech_module import transcribe_audio
+from vision_module import analyze_student_attention_and_emotion, register_new_face, identify_known_faces, live_attention_analysis
 
 frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend'))
 static_dir = os.path.join(frontend_dir, 'static')
@@ -61,6 +62,12 @@ def speech_to_text():
     except Exception as e:
         app.logger.error(f"Exception in speech_to_text: {str(e)}")
         return jsonify({'error': str(e)}), 500
+
+@app.route('/api/live-attention', methods=['GET'])
+def live_attention():
+    """Start live attention analysis."""
+    live_attention_analysis()
+    return jsonify({'message': 'Live attention analysis started.'})
 
 @app.route('/')
 def serve_index():
