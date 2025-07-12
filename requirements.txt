@@ -1,13 +1,24 @@
-flask
-optimum-intel[openvino]>=1.12.1
-transformers>=4.35.0
-torch>=2.0.0
-pillow
-scipy
-sounddevice
-psutil
-soundfile
-librosa>=0.10.0
-ffmpeg-python
-audioread
-SpeechRecognition
+# === Core Web Backend ===
+flask>=2.0.0           # Web server for API endpoints
+psutil                 # System utilities (used for monitoring, optional)
+
+# === AI/ML Model Inference ===
+optimum-intel[openvino]>=1.12.1  # OpenVINO-optimized inference for Intel hardware
+transformers>=4.35.0   # Hugging Face Transformers (LLMs, BLIP, etc.)
+torch>=2.0.0           # PyTorch backend for BLIP and other models
+
+# === Image Processing ===
+pillow                 # Image file handling (PIL)
+scipy                  # Used by some image/audio models
+
+# === Audio/Speech Processing ===
+sounddevice            # For microphone input (speech-to-text)
+soundfile              # For reading/writing audio files
+librosa>=0.10.0        # Audio feature extraction
+ffmpeg-python          # Python bindings for FFmpeg (audio conversion)
+audioread              # Backend for librosa (audio decoding)
+SpeechRecognition      # For speech-to-text (optional, used in some modules)
+pydub
+
+# === Hugging Face Hub (for model downloads) ===
+huggingface_hub>=0.17.0  # For downloading models via scripts

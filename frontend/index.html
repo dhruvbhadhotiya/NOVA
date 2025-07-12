@@ -3,62 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Classroom Assistant</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background: #f7f7f7; }
-        h1 { color: #2c3e50; }
-        .container { background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 8px #0001; max-width: 600px; margin: auto; }
-        form { margin-bottom: 32px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; }
-        input[type="text"], textarea { width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px; }
-        button { background: #3498db; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
-        button:hover { background: #217dbb; }
-        .result { background: #eaf6ff; padding: 12px; border-radius: 4px; margin-top: 12px; }
-    </style>
+    <title>AI Assistant Hub - Modern Chat Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>AI Classroom Assistant</h1>
-        <h2>Text QnA</h2>
-        <form id="qna-form">
-            <label for="question">Question:</label>
-            <div class="input-with-button">
-                <input type="text" id="question" name="question" required>
-                <button type="button" id="record-button" title="Record Audio">
-                    <span id="mic-icon">🎤</span>
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🤖</div>
+                    <h1>AI Assistant Hub</h1>
+                </div>
+                <p class="subtitle">Advanced AI Chat Interface with Emotion Analysis</p>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <span class="theme-icon">🌙</span>
                 </button>
             </div>
-            <div id="recording-status" style="display:none; color: #e74c3c; margin: 5px 0;">Recording...</div>
-            <label for="context">Context (optional):</label>
-            <textarea id="context" name="context" rows="2"></textarea>
-            <button type="submit">Get Answer</button>
-        </form>
-        <div id="qna-result" class="result" style="display:none;"></div>
+        </header>
 
-        <h2>Image + Question (Image QnA)</h2>
-        <form id="image-qna-form" enctype="multipart/form-data">
-            <label for="image-qna-image">Upload Image:</label>
-            <input type="file" id="image-qna-image" name="image" accept="image/*" required>
-            <label for="image-qna-question">Question about the image:</label>
-            <input type="text" id="image-qna-question" name="question" required>
-            <button type="submit">Get Caption & Answer</button>
-        </form>
-        <div id="image-qna-result" class="result" style="display:none;"></div>
+        <!-- Main Chat Interface -->
+        <main class="chat-container">
+            <!-- Output Section -->
+            <section class="output-section">
+                <div class="output-header">
+                    <h2>AI Response & Analysis</h2>
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Ready</span>
+                    </div>
+                </div>
+                
+                <div class="response-area">
+                    <div class="welcome-message">
+                        <div class="welcome-icon">💬</div>
+                        <h3>Welcome to AI Assistant Hub</h3>
+                        <p>Start a conversation to see AI responses and emotion analysis here</p>
+                    </div>
+                    
+                    <!-- QnA Response -->
+                    <div id="qna-response" class="response-card" style="display: none;">
+                        <div class="response-header">
+                            <div class="response-type">Text Analysis</div>
+                            <div class="timestamp"></div>
+                        </div>
+                        <div class="response-content">
+                            <div id="qna-result" class="result-content"></div>
+                        </div>
+                        <div class="emotion-analysis">
+                            <div class="emotion-header">
+                                <span class="emotion-icon">🎭</span>
+                                <span>Emotion Analysis</span>
+                            </div>
+                            <div class="emotion-indicators">
+                                <div class="emotion-bar">
+                                    <span class="emotion-label">Confidence</span>
+                                    <div class="emotion-progress">
+                                        <div class="emotion-fill" style="width: 85%"></div>
+                                    </div>
+                                    <span class="emotion-value">85%</span>
+                                </div>
+                                <div class="emotion-bar">
+                                    <span class="emotion-label">Relevance</span>
+                                    <div class="emotion-progress">
+                                        <div class="emotion-fill" style="width: 92%"></div>
+                                    </div>
+                                    <span class="emotion-value">92%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        <h2>Image Captioning</h2>
-        <form id="image-caption-form" enctype="multipart/form-data">
-            <label for="caption-image-file">Upload Image:</label>
-            <input type="file" id="caption-image-file" name="image" accept="image/*" required>
-            <button type="submit">Generate Caption</button>
-        </form>
-        <div id="image-caption-result" class="result" style="display:none;"></div>
-        <h2>Audio Format Testing</h2>
-        <p>Test which audio formats your browser supports for recording:</p>
-        <button id="test-formats-button" type="button">Test Audio Formats</button>
-        <div id="format-test-results" class="result"></div>
+                    <!-- Image Analysis Response -->
+                    <div id="image-response" class="response-card" style="display: none;">
+                        <div class="response-header">
+                            <div class="response-type">Image Analysis</div>
+                            <div class="timestamp"></div>
+                        </div>
+                        <div class="response-content">
+                            <div id="image-qna-result" class="result-content"></div>
+                            <div id="image-caption-result" class="result-content"></div>
+                        </div>
+                        <div class="emotion-analysis">
+                            <div class="emotion-header">
+                                <span class="emotion-icon">🖼️</span>
+                                <span>Visual Analysis</span>
+                            </div>
+                            <div class="emotion-indicators">
+                                <div class="emotion-bar">
+                                    <span class="emotion-label">Accuracy</span>
+                                    <div class="emotion-progress">
+                                        <div class="emotion-fill" style="width: 78%"></div>
+                                    </div>
+                                    <span class="emotion-value">78%</span>
+                                </div>
+                                <div class="emotion-bar">
+                                    <span class="emotion-label">Detail Level</span>
+                                    <div class="emotion-progress">
+                                        <div class="emotion-fill" style="width: 88%"></div>
+                                    </div>
+                                    <span class="emotion-value">88%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Input Section -->
+            <section class="input-section">
+                <!-- Chat History -->
+                <div class="chat-history">
+                    <div class="history-header">
+                        <h3>Chat History</h3>
+                        <button class="clear-history-btn" onclick="clearChatHistory()">
+                            <span>🗑️</span>
+                        </button>
+                    </div>
+                    <div class="history-list" id="chat-history">
+                        <div class="history-empty">
+                            <span>No previous conversations</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Forms -->
+                <div class="input-forms">
+                    <!-- Text Q&A Form -->
+                    <div class="form-section active" id="text-form-section">
+                        <div class="form-header">
+                            <div class="form-tabs">
+                                <button class="tab-btn active" onclick="switchTab('text')">
+                                    <span>💬</span>
+                                    <span>Text Q&A</span>
+                                </button>
+                                <button class="tab-btn" onclick="switchTab('image-qna')">
+                                    <span>🖼️</span>
+                                    <span>Image Q&A</span>
+                                </button>
+                                <button class="tab-btn" onclick="switchTab('image-caption')">
+                                    <span>📝</span>
+                                    <span>Caption</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <form id="qna-form" class="chat-form">
+                            <div class="input-group">
+                                <div class="message-input-container">
+                                    <div class="input-with-voice">
+                                        <input type="text" id="question" placeholder="Ask me anything..." required>
+                                        <button type="button" id="record-button" class="voice-btn" title="Record audio">
+                                            <span id="mic-icon">🎤</span>
+                                        </button>
+                                    </div>
+                                    <div id="recording-status" class="recording-status">Recording... Click to stop</div>
+                                </div>
+                                <div class="context-input">
+                                    <textarea id="context" rows="3" placeholder="Add context (optional)"></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="send-btn">
+                                <span>Send</span>
+                                <div class="send-icon">→</div>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Image Q&A Form -->
+                    <div class="form-section" id="image-qna-form-section">
+                        <form id="image-qna-form" class="chat-form">
+                            <div class="input-group">
+                                <div class="file-upload-area">
+                                    <input type="file" id="image-qna-image" accept="image/*" required>
+                                    <div class="file-upload-display">
+                                        <div class="upload-icon">📁</div>
+                                        <span class="upload-text">Drop image here or click to browse</span>
+                                        <div class="file-preview" id="image-qna-preview"></div>
+                                    </div>
+                                </div>
+                                <div class="message-input-container">
+                                    <input type="text" id="image-qna-question" placeholder="What would you like to know about this image?" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="send-btn">
+                                <span>Analyze</span>
+                                <div class="send-icon">→</div>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Image Caption Form -->
+                    <div class="form-section" id="image-caption-form-section">
+                        <form id="image-caption-form" class="chat-form">
+                            <div class="input-group">
+                                <div class="file-upload-area">
+                                    <input type="file" id="caption-image-file" accept="image/*" required>
+                                    <div class="file-upload-display">
+                                        <div class="upload-icon">📁</div>
+                                        <span class="upload-text">Drop image here or click to browse</span>
+                                        <div class="file-preview" id="caption-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="send-btn">
+                                <span>Generate Caption</span>
+                                <div class="send-icon">→</div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
+
     <script src="static/app.js"></script>
-    <script src="static/audio_format_test.js"></script>
     <link rel="stylesheet" href="static/style.css">
 </body>
 </html>
